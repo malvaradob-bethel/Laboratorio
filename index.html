@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0f172a" />
+<title>Laboratorio · Taller</title>
+<style>
+/* ============================================================
+   LABORATORIO · TALLER  —  App móvil
+   Red Nacional Radio y Televisión · Unidad Técnica · Bethel
+   ============================================================ */
+:root{
+  --bg1:#0f172a; --bg2:#0b1220; --card:#1e293b; --card2:#172033;
+  --border:#334155; --text:#e2e8f0; --muted:#94a3b8; --soft:#cbd5e1;
+  --accent:#3b82f6; --accent2:#2563eb; --ok:#22c55e; --danger:#ef4444;
+  --r:14px; --r-sm:10px;
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:0}
+input,select,textarea{font-family:inherit;font-size:16px}
+.hide{display:none!important}
+
+/* ---------- LOGIN ---------- */
+#login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;z-index:100}
+.login-card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 22px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.brand .dot{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#3b82f6,#22c55e);display:flex;align-items:center;justify-content:center;font-size:20px}
+.brand h1{font-size:1.1rem;margin:0;color:#f8fafc;line-height:1.1}
+.brand small{color:var(--muted);font-size:.72rem}
+.login-card .sub{color:var(--muted);font-size:.82rem;margin:14px 0 18px}
+.roles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.role-btn{padding:12px 6px;border-radius:12px;background:var(--card2);border:1px solid var(--border);color:var(--soft);font-weight:600;font-size:.78rem;transition:.18s}
+.role-btn .ico{display:block;font-size:1.25rem;margin-bottom:4px}
+.role-btn.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fld{display:grid;gap:6px;margin-bottom:14px}
+.fld label{font-size:.8rem;color:var(--soft);font-weight:600}
+.in{padding:13px 14px;border:1px solid var(--border);border-radius:12px;background:var(--bg2);color:var(--text);outline:none;width:100%}
+.in:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.18)}
+.btn{padding:14px;border-radius:12px;font-weight:700;font-size:.95rem;width:100%;background:var(--accent);color:#fff}
+.btn:active{transform:scale(.99)}
+.btn.full{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.err-msg{color:#fca5a5;font-size:.82rem;min-height:18px;margin-top:4px;text-align:center}
+.login-foot{text-align:center;color:#64748b;font-size:.68rem;margin-top:18px;line-height:1.4}
+
+/* ---------- APP SHELL ---------- */
+#app{position:fixed;inset:0;display:flex;flex-direction:column}
+header.top{display:flex;align-items:center;gap:8px;padding:max(12px,env(safe-area-inset-top)) 14px 12px;background:var(--card);border-bottom:1px solid var(--border);flex:0 0 auto}
+header.top .ttl{flex:1;min-width:0}
+header.top h2{margin:0;font-size:1.02rem;color:#f8fafc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .who{font-size:.7rem;color:var(--muted)}
+.badge{padding:5px 10px;border-radius:999px;font-size:.66rem;font-weight:800;letter-spacing:.4px}
+.badge.SECTORISTA{background:#0c4a6e;color:#bfdbfe}
+.badge.LABORATORIO{background:#14532d;color:#bbf7d0}
+.badge.ADMIN{background:#7c2d12;color:#fed7aa}
+.sync-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;vertical-align:middle}
+.iconbtn{width:36px;height:36px;border-radius:10px;background:var(--card2);border:1px solid var(--border);color:var(--soft);font-size:1rem;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.searchbar{padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);flex:0 0 auto;display:flex;gap:8px;align-items:center}
+.searchbar input{flex:1;padding:11px 14px;border-radius:11px;border:1px solid var(--border);background:var(--bg2);color:var(--text);outline:none}
+.searchbar input:focus{border-color:var(--accent)}
+.count-chip{font-size:.7rem;color:var(--muted);white-space:nowrap}
+main.content{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 100px}
+
+/* ---------- CARDS ---------- */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:11px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.card:active{background:var(--card2)}
+.card .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.card .eq{font-weight:700;font-size:1rem;color:#f8fafc;line-height:1.2}
+.card .meta{margin-top:8px;display:grid;gap:4px}
+.card .meta div{font-size:.82rem;color:var(--soft);display:flex;gap:6px}
+.card .meta .k{color:var(--muted);min-width:74px;flex:0 0 auto}
+.card .id{font-size:.66rem;color:#64748b;margin-top:9px;letter-spacing:.3px}
+.card .trabajo{margin-top:8px;font-size:.8rem;color:var(--muted);background:var(--bg2);border-radius:9px;padding:8px 10px;border:1px solid var(--border)}
+.card .stepbar{display:flex;gap:4px;margin-top:10px}
+.card .step{height:5px;flex:1;border-radius:999px;background:#334155}
+
+.pill{padding:5px 11px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.2px;border:1px solid;white-space:nowrap;display:inline-block}
+.e-nueva{background:#fed7aa;color:#7c2d12;border-color:#fb923c}
+.e-pend {background:#fecaca;color:#7f1d1d;border-color:#f87171}
+.e-proc {background:#fde68a;color:#713f12;border-color:#f59e0b}
+.e-rep  {background:#bbf7d0;color:#14532d;border-color:#22c55e}
+.e-ent  {background:#bfdbfe;color:#0c4a6e;border-color:#60a5fa}
+.e-alm  {background:#e5e7eb;color:#111827;border-color:#9ca3af}
+.pill.tap{cursor:pointer}
+.pill.tap::after{content:'▾';margin-left:5px;font-size:.7em;opacity:.7}
+
+.empty{text-align:center;color:var(--muted);padding:48px 20px}
+.empty .big{font-size:2.4rem;margin-bottom:10px;opacity:.5}
+.empty p{margin:4px 0;font-size:.9rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.tag{font-size:.68rem;padding:3px 9px;border-radius:999px;background:var(--bg2);border:1px solid var(--border);color:var(--soft)}
+
+/* timeline */
+.timeline{margin-top:6px;border-left:2px solid var(--border);padding-left:16px;margin-left:5px}
+.tl-item{position:relative;margin-bottom:15px}
+.tl-item:last-child{margin-bottom:2px}
+.tl-dot{position:absolute;left:-22px;top:2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 2px rgba(0,0,0,.2)}
+.tl-date{font-size:.72rem;font-weight:700}
+.tl-text{font-size:.85rem;color:var(--soft);margin-top:3px;white-space:pre-wrap}
+
+/* bottom nav */
+nav.tabs{flex:0 0 auto;display:flex;background:var(--card);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{flex:1;background:none;color:var(--muted);padding:9px 2px 10px;font-size:.62rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;border-top:2px solid transparent}
+nav.tabs button .ti{font-size:1.25rem;line-height:1}
+nav.tabs button.on{color:#fff;border-top-color:var(--accent)}
+
+/* fab */
+.fab{position:fixed;right:18px;bottom:calc(74px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font-size:1.9rem;line-height:1;box-shadow:0 8px 22px rgba(37,99,235,.5);z-index:40;display:flex;align-items:center;justify-content:center}
+.fab:active{transform:scale(.93)}
+
+/* sheet */
+.backdrop{position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:60;opacity:0;pointer-events:none;transition:.2s}
+.backdrop.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--card);border-radius:22px 22px 0 0;border-top:1px solid var(--border);max-height:92vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .26s cubic-bezier(.22,1,.36,1)}
+.sheet.show{transform:translateY(0)}
+.sheet .grab{width:42px;height:5px;border-radius:999px;background:#475569;margin:10px auto 4px}
+.sheet .sh-head{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 10px;border-bottom:1px solid var(--border)}
+.sheet .sh-head h3{margin:0;font-size:1.05rem;color:#f8fafc}
+.sheet .sh-body{overflow-y:auto;padding:16px 18px;padding-bottom:max(20px,env(safe-area-inset-bottom))}
+.sheet textarea.in{min-height:88px;resize:vertical}
+.sheet .actions{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.sheet .actions .btn{flex:1;min-width:120px}
+.btn.ghost{background:var(--card2);border:1px solid var(--border);color:var(--soft)}
+.btn.danger{background:#7f1d1d;color:#fecaca;border:1px solid #b91c1c}
+.btn.ok{background:linear-gradient(135deg,#16a34a,#22c55e);color:#052e16}
+.est-grid{display:grid;gap:9px}
+.est-opt{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-weight:600;font-size:.92rem}
+.est-opt:active{background:var(--card2)}
+.est-opt.sel{border-color:var(--accent);box-shadow:0 0 0 2px rgba(59,130,246,.35)}
+.det-row{display:flex;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.det-row .k{color:var(--muted);min-width:96px;flex:0 0 auto}
+.det-row .v{color:var(--text)}
+.det-row:last-child{border-bottom:0}
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#0b1220;border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:12px;font-size:.85rem;z-index:90;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:88%}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:#22c55e}
+#toast.err{border-color:#ef4444}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login">
+  <div class="login-card">
+    <div class="brand"><div class="dot">🔧</div><div><h1>Laboratorio · Taller</h1><small>Unidad Técnica · Bethel</small></div></div>
+    <p class="sub">Ingresa tu usuario y clave.</p>
+    <div class="fld"><label for="user">Usuario</label><input class="in" id="user" type="text" autocapitalize="none" autocomplete="username" placeholder="usuario" /></div>
+    <div class="fld"><label for="pass">Clave</label><input class="in" id="pass" type="password" placeholder="••••••" autocomplete="current-password" /></div>
+    <button class="btn full" id="enter">Entrar</button>
+    <div class="err-msg" id="loginErr"></div>
+    <div class="login-foot">Red Nacional Radio y Televisión<br>Unidad Técnica · Bethel</div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hide">
+  <header class="top">
+    <div class="ttl"><h2 id="tabTitle">Registro</h2><div class="who"><span id="roleBadge" class="badge">—</span><span id="syncDot" class="sync-dot"></span></div></div>
+    <button class="iconbtn" id="datos" title="Datos y respaldo">📥</button>
+    <button class="iconbtn" id="sync" title="Actualizar">🔄</button>
+    <button class="iconbtn" id="logout" title="Salir">⏻</button>
+  </header>
+  <div class="searchbar" id="searchWrap"><input id="q" type="search" placeholder="Buscar equipo, estación, ID…" /><span class="count-chip" id="count"></span></div>
+  <main class="content" id="content"></main>
+  <button class="fab" id="fab">+</button>
+  <nav class="tabs" id="tabs"></nav>
+</div>
+
+<!-- ============ SHEET ============ -->
+<div class="backdrop" id="backdrop"></div>
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <div class="sh-head"><h3 id="sheetTitle">—</h3><button class="iconbtn" id="sheetClose">✕</button></div>
+  <div class="sh-body" id="sheetBody"></div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   1) CONFIG  — claves y listas
+   ============================================================ */
+const CONFIG = {
+  equipos:  ['TRANSMISOR TV','TRANSMISOR FM','UPS','TRANSFORMADOR','ESTABILIZADOR','DISTRIBUIDOR','ANTENAS','RECEPTOR'],
+  servicios:['PRUEBA','DIAGNOSTICO','REPARACION','MANTENIMIENTO','REESTRUCTURACION','CALIBRACION','FABRICACION'],
+  estados:  ['SOLICITUD NUEVA','PENDIENTE','EN PROCESO','REPARADO','ENTREGADO','ALMACÉN'],
+  estadosHom: ['EN TRÁMITE','OBSERVADO','HOMOLOGADO'],
+  estadosProy:['PLANIFICADO','EN CURSO','PAUSADO','FINALIZADO']
+};
+
+/* Usuarios para MODO LOCAL (sin GitHub). En producción se leen de usuarios.json.
+   Cada usuario: { usuario, rol, hash? , pass? }  — usa hash (SHA-256) en el repo. */
+const USUARIOS_DEFAULT = [
+  {usuario:'sectorista',  rol:'SECTORISTA',  pass:'sector2025'},
+  {usuario:'laboratorio', rol:'LABORATORIO', pass:'lab2025'},
+  {usuario:'admin',       rol:'ADMIN',       pass:'admin2025'}
+];
+let USERS = USUARIOS_DEFAULT.slice();
+
+/* ============================================================
+   2) GITHUB  — fuente de datos compartida (un solo JSON = "la tabla")
+   ------------------------------------------------------------
+   - Deja token VACÍO para trabajar 100% local (cada equipo su copia).
+   - Llénalo para que TODOS lean/escriban el mismo JSON del repo.
+   - SEGURIDAD: usa un PAT *fino*, limitado SOLO a este repositorio,
+     permiso "Contents: Read and write". No uses un token de cuenta.
+     Si el HTML quedará público, NO pongas el token aquí: mejor leer
+     del raw público y escribir vía tu Apps Script (proxy con el token).
+   ============================================================ */
+const GH = {
+  // --- Modo DIRECTO (token en el HTML) ---
+  owner:  '',                       // ej. 'betheltv'
+  repo:   '',                       // ej. 'laboratorio-data'
+  branch: 'main',
+  path:   'data/laboratorio.json',
+  usersPath:'data/usuarios.json',
+  token:  '',                       // PAT fino. Vacío = sin modo directo
+  // --- Modo PROXY (token oculto en Apps Script) ---
+  proxyUrl:   '',                   // URL del Web App de Apps Script
+  proxySecret:'',                   // misma frase secreta que pusiste en el script
+  _sha:   null
+};
+// proxy tiene prioridad; si no, directo; si nada, local
+function ghMode(){
+  if(GH.proxyUrl && GH.proxySecret) return 'proxy';
+  if(GH.token && GH.owner && GH.repo) return 'direct';
+  return 'off';
+}
+const ghEnabled = ()=> ghMode()!=='off';
+
+async function proxyCall(payload){
+  // text/plain evita el preflight CORS con Apps Script; el secreto va en el cuerpo
+  const res=await fetch(GH.proxyUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({secret:GH.proxySecret,...payload})});
+  if(!res.ok) throw Object.assign(new Error('Proxy '+res.status),{status:res.status});
+  const j=await res.json();
+  if(!j.ok) throw Object.assign(new Error(j.error||'proxy'),{status:j.status||(j.error==='conflict'?409:500)});
+  return j;
+}
+
+async function ghFetch(path, fallback){
+  path = path || GH.path;
+  if(ghMode()==='proxy'){
+    const j=await proxyCall({action:'read', path});
+    const data = (j.data==null) ? (fallback!==undefined?fallback:seed()) : j.data;
+    return {data, sha:j.sha||null};
+  }
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}?ref=${GH.branch}`;
+  const res=await fetch(url,{headers:{Authorization:`Bearer ${GH.token}`,Accept:'application/vnd.github+json'}});
+  if(res.status===404) return {data:(fallback!==undefined?fallback:seed()), sha:null};
+  if(!res.ok) throw Object.assign(new Error('GitHub GET '+res.status),{status:res.status});
+  const j=await res.json();
+  const txt=decodeURIComponent(escape(atob((j.content||'').replace(/\n/g,''))));
+  return {data:JSON.parse(txt), sha:j.sha};
+}
+async function ghPut(dataObj, sha, msg, path){
+  path = path || GH.path;
+  if(ghMode()==='proxy'){
+    const j=await proxyCall({action:'write', path, data:dataObj, sha, message:msg||'update'});
+    return j.sha;
+  }
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}`;
+  const content=btoa(unescape(encodeURIComponent(JSON.stringify(dataObj,null,2))));
+  const body={message:msg||'update', content, branch:GH.branch};
+  if(sha) body.sha=sha;
+  const res=await fetch(url,{method:'PUT',headers:{Authorization:`Bearer ${GH.token}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!res.ok) throw Object.assign(new Error('GitHub PUT '+res.status),{status:res.status});
+  return (await res.json()).content.sha;
+}
+/* commit: trae lo último, aplica el cambio sobre datos frescos y guarda.
+   Reintenta si hubo conflicto (otro usuario escribió a la vez). */
+async function commit(mutator, msg){
+  setSync('busy');
+  if(!ghEnabled()){ mutator(DATA); cacheLocal(); render(); setSync('local'); return true; }
+  for(let i=0;i<3;i++){
+    try{
+      const {data,sha}=await ghFetch();
+      const nd=normalize(data);
+      mutator(nd);
+      const newSha=await ghPut(nd, sha, msg);
+      DATA=nd; GH._sha=newSha; cacheLocal(); render(); setSync('ok'); return true;
+    }catch(e){
+      if(e.status===409 || e.status===422){ continue; }       // conflicto de sha -> reintenta
+      console.error(e); mutator(DATA); cacheLocal(); render(); setSync('err');
+      toast('Sin guardar en GitHub (queda local)','err'); return false;
+    }
+  }
+  setSync('err'); toast('Conflicto al guardar, reintenta','err'); return false;
+}
+function setSync(s){
+  const d=$('#syncDot'); if(!d) return;
+  const c={ok:'#22c55e',busy:'#f59e0b',err:'#ef4444',local:'#64748b'}[s]||'#64748b';
+  d.style.background=c;
+}
+
+/* ============================================================
+   3) DATOS LOCALES (cache / respaldo offline)
+   ============================================================ */
+const KEY='lab_taller_v2';
+let DATA=seed(), ROLE=null, TAB='registro', CURRENT_USER=null;
+
+function cacheLocal(){ try{ localStorage.setItem(KEY, JSON.stringify(DATA)); }catch(e){} }
+function normalize(d){
+  d=d||{}; d.registros=d.registros||[]; d.homologaciones=d.homologaciones||[]; d.proyectos=d.proyectos||[];
+  d.registros.forEach(r=>{
+    if(!Array.isArray(r.avances)||!r.avances.length)
+      r.avances=[{fecha:r.fecha||today(), estado:r.estado||'SOLICITUD NUEVA', nota:'Registro inicial'}];
+  });
+  d.proyectos.forEach(p=>{ p.updates=p.updates||[]; });
+  return d;
+}
+async function loadAll(){
+  let cached=null; try{ cached=JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+  if(cached) DATA=normalize(cached);
+  if(ghEnabled()){
+    setSync('busy');
+    try{ const {data,sha}=await ghFetch(); DATA=normalize(data); GH._sha=sha; cacheLocal(); setSync('ok'); }
+    catch(e){ console.error(e); if(!cached) DATA=normalize(seed()); setSync('err'); toast('GitHub no disponible, modo local','err'); }
+  }else{ if(!cached) DATA=normalize(seed()); setSync('local'); }
+}
+
+/* ----- usuarios (JSON independiente) ----- */
+async function sha256(txt){
+  try{ const b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+    return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+  catch(e){ return null; }
+}
+async function checkPass(input, u){
+  if(u.hash){ const h=await sha256(input); return !!h && h.toLowerCase()===String(u.hash).toLowerCase(); }
+  if(u.pass!=null){ return input===u.pass; }
+  return false;
+}
+async function loadUsers(){
+  if(!ghEnabled()){ USERS=USUARIOS_DEFAULT.slice(); return; }
+  try{
+    const {data}=await ghFetch(GH.usersPath, {usuarios:USUARIOS_DEFAULT});
+    USERS=(data && Array.isArray(data.usuarios) && data.usuarios.length) ? data.usuarios : USUARIOS_DEFAULT.slice();
+  }catch(e){ console.error(e); USERS=USUARIOS_DEFAULT.slice(); toast('No se pudo leer usuarios, uso locales','err'); }
+}
+
+function makeId(pref){ const t=new Date(),p=n=>String(n).padStart(2,'0');
+  return `${pref}-${t.getFullYear()}${p(t.getMonth()+1)}${p(t.getDate())}-${p(t.getHours())}${p(t.getMinutes())}${p(t.getSeconds())}`; }
+function today(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(s){ if(!s) return '—'; const p=String(s).slice(0,10).split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:s; }
+
+function seed(){
+  return {
+    registros:[
+      {id:'ID-20260612-0930',fecha:'2026-06-12',equipo:'TRANSMISOR FM',servicio:'REPARACION',estacion:'HUARAZ 100.1 FM',estado:'EN PROCESO',trabajo:'Reemplazo de etapa final.',
+        avances:[{fecha:'2026-06-12',estado:'SOLICITUD NUEVA',nota:'Ingreso a taller'},{fecha:'2026-06-13',estado:'PENDIENTE',nota:'En cola de diagnóstico'},{fecha:'2026-06-15',estado:'EN PROCESO',nota:'Reemplazo de etapa final, falta prueba de potencia'}]},
+      {id:'ID-20260616-0815',fecha:'2026-06-16',equipo:'TRANSMISOR TV',servicio:'DIAGNOSTICO',estacion:'CUSCO TDT',estado:'SOLICITUD NUEVA',trabajo:'',
+        avances:[{fecha:'2026-06-16',estado:'SOLICITUD NUEVA',nota:'Solicitud registrada por sectorista'}]},
+      {id:'ID-20260610-1620',fecha:'2026-06-10',equipo:'ESTABILIZADOR',servicio:'CALIBRACION',estacion:'TRUJILLO 760 AM',estado:'REPARADO',trabajo:'Calibrado y probado.',
+        avances:[{fecha:'2026-06-10',estado:'SOLICITUD NUEVA',nota:'Ingreso'},{fecha:'2026-06-11',estado:'EN PROCESO',nota:'Calibración'},{fecha:'2026-06-13',estado:'REPARADO',nota:'Listo para retiro'}]},
+      {id:'ID-20260605-1400',fecha:'2026-06-05',equipo:'RECEPTOR',servicio:'PRUEBA',estacion:'AREQUIPA SATELITAL',estado:'ENTREGADO',trabajo:'Probado OK y entregado.',
+        avances:[{fecha:'2026-06-05',estado:'SOLICITUD NUEVA',nota:'Ingreso'},{fecha:'2026-06-06',estado:'REPARADO',nota:'Probado OK'},{fecha:'2026-06-08',estado:'ENTREGADO',nota:'Entregado a logística'}]}
+    ],
+    homologaciones:[
+      {id:'HM-20260601-1000',equipo:'TRANSMISOR FM',marca:'BETHEL FM300',estacion:'PIURA 100.1 FM',fechaEnvio:'2026-06-01',expediente:'EXP-2026-0431',estado:'EN TRÁMITE',obs:'Esperando inspección del MTC.'}
+    ],
+    proyectos:[
+      {id:'PR-20260401-0900',nombre:'Migración TDT zona norte',descripcion:'Implementación de transmisores TDT en estaciones del norte.',estado:'EN CURSO',fechaInicio:'2026-04-01',
+       updates:[{fecha:'2026-06-15',texto:'Instalado y probado el transmisor de Chiclayo.'},{fecha:'2026-05-20',texto:'Levantamiento técnico de las 3 estaciones pendientes.'}]}
+    ]
+  };
+}
+
+/* ============================================================
+   4) HELPERS UI
+   ============================================================ */
+const $=(s,c=document)=>c.querySelector(s);
+const $$=(s,c=document)=>[...c.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function toast(msg,type='ok'){ const t=$('#toast');t.textContent=msg;t.className='';t.classList.add(type,'show');clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),2200); }
+function estClass(e){switch((e||'').toUpperCase()){case 'SOLICITUD NUEVA':return 'e-nueva';case 'PENDIENTE':return 'e-pend';case 'EN PROCESO':return 'e-proc';case 'REPARADO':return 'e-rep';case 'ENTREGADO':return 'e-ent';case 'ALMACÉN':case 'ALMACEN':return 'e-alm';default:return 'e-alm';}}
+function estDot(e){return {'SOLICITUD NUEVA':'#fb923c','PENDIENTE':'#f87171','EN PROCESO':'#f59e0b','REPARADO':'#22c55e','ENTREGADO':'#60a5fa','ALMACÉN':'#9ca3af','ALMACEN':'#9ca3af'}[(e||'').toUpperCase()]||'#3b82f6';}
+const P=()=>PERMS[ROLE];
+
+const PERMS={
+  SECTORISTA:{tabs:['registro'],addReg:true,editReg:false,estado:false,del:false},
+  LABORATORIO:{tabs:['registro','historial','homologaciones','proyectos'],addReg:true,editReg:true,estado:true,del:false},
+  ADMIN:{tabs:['registro','historial','homologaciones','proyectos'],addReg:true,editReg:true,estado:true,del:true}
+};
+const TAB_META={registro:{t:'Registro',i:'📋'},historial:{t:'Historial',i:'🗂️'},homologaciones:{t:'Homologaciones',i:'📡'},proyectos:{t:'Proyectos',i:'🚧'}};
+
+function openSheet(title,html){ $('#sheetTitle').textContent=title; $('#sheetBody').innerHTML=html; $('#backdrop').classList.add('show'); $('#sheet').classList.add('show'); }
+function closeSheet(){ $('#backdrop').classList.remove('show'); $('#sheet').classList.remove('show'); }
+$('#sheetClose').onclick=closeSheet; $('#backdrop').onclick=closeSheet;
+function selectHtml(id,opts,val){ return `<select class="in" id="${id}">${opts.map(o=>`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}</select>`; }
+
+/* línea de tiempo de un equipo: puntos con color de estado */
+function timelineRegistro(avances){
+  const list=(avances||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  if(!list.length) return '<p style="color:var(--muted);font-size:.85rem">Sin avances.</p>';
+  return `<div class="timeline">${list.map(a=>{const c=estDot(a.estado);return `
+    <div class="tl-item">
+      <span class="tl-dot" style="background:${c}"></span>
+      <div class="tl-date" style="color:${c}">${fmtDate(a.fecha)} · ${esc(a.estado||'')}</div>
+      ${a.nota?`<div class="tl-text">${esc(a.nota)}</div>`:''}
+    </div>`;}).join('')}</div>`;
+}
+
+/* ============================================================
+   5) LOGIN
+   ============================================================ */
+let selRole=null;
+async function doLogin(){
+  const err=$('#loginErr');
+  const name=($('#user').value||'').trim().toLowerCase();
+  const pw=$('#pass').value||'';
+  if(!name){ err.textContent='Ingresa tu usuario.'; return; }
+  const u=USERS.find(x=>String(x.usuario||'').toLowerCase()===name);
+  if(!u || !PERMS[u.rol]){ err.textContent='Usuario no válido.'; return; }
+  if(!(await checkPass(pw,u))){ err.textContent='Clave incorrecta.'; return; }
+  ROLE=u.rol; CURRENT_USER=u.usuario;
+  $('#login').classList.add('hide'); $('#app').classList.remove('hide');
+  buildTabs(); TAB=P().tabs[0]; showTab(TAB);
+  $('#roleBadge').className='badge '+ROLE; $('#roleBadge').textContent=ROLE;
+  $('#datos').style.display=(ROLE==='ADMIN'||ROLE==='LABORATORIO')?'flex':'none';
+}
+$('#enter').onclick=doLogin;
+$('#pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+$('#logout').onclick=()=>{ROLE=null;CURRENT_USER=null;$('#pass').value='';$('#user').value='';$('#app').classList.add('hide');$('#login').classList.remove('hide');$('#loginErr').textContent='';};
+$('#sync').onclick=async()=>{ await loadUsers(); await loadAll(); if(ROLE) render(); toast('Actualizado'); };
+$('#datos').onclick=openDatos;
+
+/* ============================================================
+   6) TABS
+   ============================================================ */
+function buildTabs(){
+  const nav=$('#tabs'); nav.innerHTML='';
+  P().tabs.forEach(t=>{const b=document.createElement('button');b.dataset.tab=t;b.innerHTML=`<span class="ti">${TAB_META[t].i}</span>${TAB_META[t].t}`;b.onclick=()=>showTab(t);nav.appendChild(b);});
+  nav.style.display=P().tabs.length>1?'flex':'none';
+}
+function showTab(t){
+  TAB=t; $('#tabTitle').textContent=TAB_META[t].t;
+  $$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+  $('#searchWrap').style.display=(t==='registro'||t==='historial')?'flex':'none';
+  const showFab=(t==='registro'&&P().addReg)||(t==='homologaciones'&&P().editReg)||(t==='proyectos'&&P().editReg);
+  $('#fab').style.display=showFab?'flex':'none';
+  render();
+}
+$('#fab').onclick=()=>{ if(TAB==='registro')formRegistro(null);else if(TAB==='homologaciones')formHom(null);else if(TAB==='proyectos')formProy(null); };
+$('#q').addEventListener('input',()=>{if(TAB==='registro'||TAB==='historial')render();});
+
+/* ============================================================
+   7) RENDER
+   ============================================================ */
+function render(){
+  if(TAB==='registro')renderRegistro(false);
+  else if(TAB==='historial')renderRegistro(true);
+  else if(TAB==='homologaciones')renderHom();
+  else if(TAB==='proyectos')renderProy();
+}
+function emptyBox(ico,txt,sub){return `<div class="empty"><div class="big">${ico}</div><p>${esc(txt)}</p>${sub?`<p style="opacity:.7">${esc(sub)}</p>`:''}</div>`;}
+
+function renderRegistro(historial){
+  const q=($('#q').value||'').toLowerCase();
+  let list=DATA.registros.filter(r=>historial?(r.estado||'').toUpperCase()==='ENTREGADO':(r.estado||'').toUpperCase()!=='ENTREGADO');
+  if(q) list=list.filter(r=>[r.id,r.fecha,r.equipo,r.servicio,r.estacion,r.estado,r.trabajo].some(v=>String(v||'').toLowerCase().includes(q)));
+  list.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  $('#count').textContent=`${list.length} equipo(s)`;
+  const c=$('#content');
+  if(!list.length){c.innerHTML=emptyBox(historial?'🗂️':'📋',historial?'Sin equipos entregados aún.':'No hay equipos en el taller.',historial?'':(P().addReg?'Toca + para registrar un ingreso.':''));return;}
+  const flow=['SOLICITUD NUEVA','PENDIENTE','EN PROCESO','REPARADO','ENTREGADO'];
+  c.innerHTML=list.map(r=>{
+    const cls=estClass(r.estado), tap=P().estado;
+    const idx=Math.max(0,flow.indexOf((r.estado||'').toUpperCase()));
+    const steps=flow.map((f,i)=>`<span class="step" style="background:${i<=idx?estDot(f):'#334155'}"></span>`).join('');
+    return `<div class="card" data-id="${esc(r.id)}">
+      <div class="row1"><div class="eq">${esc(r.equipo)}</div><span class="pill ${cls} ${tap?'tap js-av':''}" data-id="${esc(r.id)}">${esc(r.estado||'—')}</span></div>
+      <div class="meta"><div><span class="k">Servicio</span> ${esc(r.servicio||'—')}</div><div><span class="k">Estación</span> ${esc(r.estacion||'—')}</div><div><span class="k">Ingreso</span> ${fmtDate(r.fecha)}</div></div>
+      <div class="stepbar">${steps}</div>
+      ${r.trabajo?`<div class="trabajo">🔧 ${esc(r.trabajo)}</div>`:''}
+      <div class="id">${esc(r.id)} · ${(r.avances||[]).length} avance(s)</div>
+    </div>`;
+  }).join('');
+  $$('.card',c).forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('.js-av'))return;detalleRegistro(card.dataset.id);}));
+  $$('.js-av',c).forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();avanceRegistro(p.dataset.id);}));
+}
+
+function detalleRegistro(id){
+  const r=DATA.registros.find(x=>x.id===id); if(!r) return;
+  const rows=[['Estado',`<span class="pill ${estClass(r.estado)}">${esc(r.estado||'—')}</span>`],['Equipo',esc(r.equipo)],['Servicio',esc(r.servicio)],['Estación',esc(r.estacion)],['Ingreso',fmtDate(r.fecha)],['Trabajo',esc(r.trabajo||'—')],['ID',`<span style="font-size:.75rem;color:#64748b">${esc(r.id)}</span>`]]
+    .map(([k,v])=>`<div class="det-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+  let acts='';
+  if(P().estado) acts+=`<button class="btn ok js-av">+ Avance</button>`;
+  if(P().editReg) acts+=`<button class="btn ghost js-edit">Editar</button>`;
+  if(P().del) acts+=`<button class="btn danger js-del">Eliminar</button>`;
+  acts=acts?`<div class="actions">${acts}</div>`:'';
+  openSheet('Detalle del equipo', rows+`<h3 style="font-size:.95rem;margin:16px 0 8px;color:#f8fafc">Avances</h3>`+timelineRegistro(r.avances)+acts);
+  const av=$('.js-av'); if(av)av.onclick=()=>avanceRegistro(id);
+  const ed=$('.js-edit'); if(ed)ed.onclick=()=>formRegistro(r);
+  const dl=$('.js-del'); if(dl)dl.onclick=()=>{if(confirm('¿Eliminar este registro?')){commit(d=>{d.registros=d.registros.filter(x=>x.id!==id);},'Eliminar '+id);closeSheet();toast('Registro eliminado');}};
+}
+
+/* registrar avance: estado (chips) + nota + fecha */
+function avanceRegistro(id){
+  const r=DATA.registros.find(x=>x.id===id); if(!r) return;
+  let sel=r.estado||'SOLICITUD NUEVA';
+  openSheet('Registrar avance',
+    `<div class="fld"><label>Estado del equipo</label><div class="est-grid" id="estChips">${CONFIG.estados.map(e=>`<button type="button" class="est-opt js-c ${e===sel?'sel':''}" data-e="${esc(e)}"><span>${esc(e)}</span><span class="pill ${estClass(e)}">${esc(e)}</span></button>`).join('')}</div></div>
+     <div class="fld"><label>Nota del avance (opcional)</label><textarea class="in" id="av_nota" placeholder="¿Qué se hizo?"></textarea></div>
+     <div class="fld"><label>Fecha</label><input class="in" type="date" id="av_fecha" value="${today()}"></div>
+     <div class="actions"><button class="btn ghost js-cancel">Cancelar</button><button class="btn ok js-save">Guardar avance</button></div>`);
+  const chips=$$('#estChips .js-c'); chips.forEach(b=>b.onclick=()=>{sel=b.dataset.e;chips.forEach(x=>x.classList.toggle('sel',x===b));});
+  $('.js-cancel').onclick=closeSheet;
+  $('.js-save').onclick=()=>{
+    const nota=$('#av_nota').value.trim(), fecha=$('#av_fecha').value||today();
+    commit(d=>{const t=d.registros.find(x=>x.id===id);if(!t)return;t.estado=sel;(t.avances=t.avances||[]).push({fecha,estado:sel,nota});},'Avance '+id);
+    closeSheet(); toast(sel==='ENTREGADO'?'Entregado → Historial':'Avance registrado');
+  };
+}
+
+function formRegistro(r){
+  const isNew=!r, basic=ROLE==='SECTORISTA';
+  const v=r||{fecha:today(),equipo:CONFIG.equipos[0],servicio:CONFIG.servicios[0],estacion:'',estado:'SOLICITUD NUEVA',trabajo:''};
+  let html=`<div class="fld"><label>Fecha de ingreso</label><input class="in" type="date" id="f_fecha" value="${esc(v.fecha||today())}"></div>
+    <div class="fld"><label>Equipo</label>${selectHtml('f_equipo',CONFIG.equipos,v.equipo)}</div>
+    <div class="fld"><label>Servicio</label>${selectHtml('f_servicio',CONFIG.servicios,v.servicio)}</div>
+    <div class="fld"><label>Estación</label><input class="in" id="f_estacion" placeholder="Ej. CUSCO TDT" value="${esc(v.estacion||'')}"></div>`;
+  if(!basic) html+=`<div class="fld"><label>Estado</label>${selectHtml('f_estado',CONFIG.estados,v.estado)}</div><div class="fld"><label>Trabajo realizado</label><textarea class="in" id="f_trabajo">${esc(v.trabajo||'')}</textarea></div>`;
+  html+=`<div class="actions"><button class="btn ghost js-cancel">Cancelar</button><button class="btn ok js-save">${isNew?'Registrar':'Guardar'}</button></div>`;
+  openSheet(isNew?(basic?'Nueva solicitud':'Nuevo registro'):'Editar registro', html);
+  $('.js-cancel').onclick=closeSheet;
+  $('.js-save').onclick=()=>{
+    const est=$('#f_estacion').value.trim(); if(!est){toast('Ingresa la estación','err');return;}
+    const obj={id:r?r.id:makeId('ID'),fecha:$('#f_fecha').value||today(),equipo:$('#f_equipo').value,servicio:$('#f_servicio').value,estacion:est,
+      estado:basic?(r?r.estado:'SOLICITUD NUEVA'):$('#f_estado').value, trabajo:basic?(r?r.trabajo:''):$('#f_trabajo').value.trim()};
+    if(isNew) obj.avances=[{fecha:obj.fecha,estado:obj.estado,nota:basic?'Solicitud registrada':'Registro creado'}];
+    commit(d=>{
+      if(r){const t=d.registros.find(x=>x.id===obj.id);if(!t)return;
+        if(obj.estado!==t.estado)(t.avances=t.avances||[]).push({fecha:today(),estado:obj.estado,nota:'Cambio de estado'});
+        Object.assign(t,obj);
+      }else d.registros.push(obj);
+    }, (r?'Editar ':'Nuevo ')+'registro '+obj.id);
+    closeSheet(); toast(r?'Registro actualizado':(basic?'Solicitud enviada':'Registro creado'));
+  };
+}
+
+/* ----- HOMOLOGACIONES ----- */
+function renderHom(){
+  const c=$('#content'); const list=[...DATA.homologaciones].sort((a,b)=>(b.fechaEnvio||'').localeCompare(a.fechaEnvio||''));
+  if(!list.length){c.innerHTML=emptyBox('📡','No hay equipos en homologación.',P().editReg?'Toca + para agregar uno.':'');return;}
+  c.innerHTML=list.map(h=>`<div class="card" data-id="${esc(h.id)}">
+      <div class="row1"><div class="eq">${esc(h.equipo)}</div><span class="pill ${h.estado==='HOMOLOGADO'?'e-rep':h.estado==='OBSERVADO'?'e-pend':'e-proc'}">${esc(h.estado||'—')}</span></div>
+      <div class="meta"><div><span class="k">Marca</span> ${esc(h.marca||'—')}</div><div><span class="k">Estación</span> ${esc(h.estacion||'—')}</div><div><span class="k">Envío MTC</span> ${fmtDate(h.fechaEnvio)}</div><div><span class="k">Expediente</span> ${esc(h.expediente||'—')}</div></div>
+      ${h.obs?`<div class="trabajo">📝 ${esc(h.obs)}</div>`:''}</div>`).join('');
+  $$('.card',c).forEach(card=>card.onclick=()=>formHom(DATA.homologaciones.find(x=>x.id===card.dataset.id)));
+}
+function formHom(h){
+  const isNew=!h;
+  const v=h||{equipo:CONFIG.equipos[0],marca:'',estacion:'',fechaEnvio:today(),expediente:'',estado:CONFIG.estadosHom[0],obs:''};
+  let html=`<div class="fld"><label>Equipo</label>${selectHtml('h_equipo',CONFIG.equipos,v.equipo)}</div>
+    <div class="fld"><label>Marca / Modelo</label><input class="in" id="h_marca" value="${esc(v.marca||'')}"></div>
+    <div class="fld"><label>Estación</label><input class="in" id="h_estacion" value="${esc(v.estacion||'')}"></div>
+    <div class="fld"><label>Fecha de envío al MTC</label><input class="in" type="date" id="h_fecha" value="${esc(v.fechaEnvio||today())}"></div>
+    <div class="fld"><label>N° Expediente</label><input class="in" id="h_exp" value="${esc(v.expediente||'')}"></div>
+    <div class="fld"><label>Estado</label>${selectHtml('h_estado',CONFIG.estadosHom,v.estado)}</div>
+    <div class="fld"><label>Observaciones</label><textarea class="in" id="h_obs">${esc(v.obs||'')}</textarea></div>
+    <div class="actions"><button class="btn ghost js-cancel">Cancelar</button>`;
+  if(!isNew&&P().del) html+=`<button class="btn danger js-del">Eliminar</button>`;
+  html+=`<button class="btn ok js-save">${isNew?'Agregar':'Guardar'}</button></div>`;
+  openSheet(isNew?'Nueva homologación':'Editar homologación', html);
+  $('.js-cancel').onclick=closeSheet;
+  const del=$('.js-del'); if(del)del.onclick=()=>{if(confirm('¿Eliminar?')){commit(d=>{d.homologaciones=d.homologaciones.filter(x=>x.id!==h.id);},'Eliminar hom '+h.id);closeSheet();toast('Eliminado');}};
+  $('.js-save').onclick=()=>{
+    const o={id:h?h.id:makeId('HM'),equipo:$('#h_equipo').value,marca:$('#h_marca').value.trim(),estacion:$('#h_estacion').value.trim(),fechaEnvio:$('#h_fecha').value,expediente:$('#h_exp').value.trim(),estado:$('#h_estado').value,obs:$('#h_obs').value.trim()};
+    commit(d=>{if(h){const t=d.homologaciones.find(x=>x.id===o.id);if(t)Object.assign(t,o);}else d.homologaciones.push(o);},(h?'Editar':'Nueva')+' hom '+o.id);
+    closeSheet(); toast(h?'Actualizado':'Agregado');
+  };
+}
+
+/* ----- PROYECTOS ----- */
+function renderProy(){
+  const c=$('#content'); const list=[...DATA.proyectos].sort((a,b)=>(b.fechaInicio||'').localeCompare(a.fechaInicio||''));
+  if(!list.length){c.innerHTML=emptyBox('🚧','No hay proyectos.',P().editReg?'Toca + para crear uno.':'');return;}
+  c.innerHTML=list.map(p=>{
+    const u=(p.updates||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''))[0];
+    return `<div class="card" data-id="${esc(p.id)}">
+      <div class="row1"><div class="eq">${esc(p.nombre)}</div><span class="pill ${p.estado==='FINALIZADO'?'e-rep':p.estado==='PAUSADO'?'e-pend':p.estado==='EN CURSO'?'e-proc':'e-nueva'}">${esc(p.estado||'—')}</span></div>
+      <div class="meta"><div><span class="k">Inicio</span> ${fmtDate(p.fechaInicio)}</div></div>
+      ${p.descripcion?`<div style="font-size:.83rem;color:var(--soft);margin-top:7px">${esc(p.descripcion)}</div>`:''}
+      <div class="tags"><span class="tag">🗓️ ${(p.updates||[]).length} avance(s)</span>${u?`<span class="tag">Últ.: ${fmtDate(u.fecha)}</span>`:''}</div></div>`;
+  }).join('');
+  $$('.card',c).forEach(card=>card.onclick=()=>detalleProy(card.dataset.id));
+}
+function detalleProy(id){
+  const p=DATA.proyectos.find(x=>x.id===id); if(!p) return;
+  const ups=(p.updates||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  const tl=ups.length?`<div class="timeline">${ups.map(u=>`<div class="tl-item"><span class="tl-dot" style="background:#3b82f6"></span><div class="tl-date" style="color:#60a5fa">${fmtDate(u.fecha)}</div><div class="tl-text">${esc(u.texto)}</div></div>`).join('')}</div>`:`<p style="color:var(--muted);font-size:.85rem">Sin avances registrados.</p>`;
+  let acts=`<div class="actions">`;
+  if(P().editReg) acts+=`<button class="btn ok js-up">+ Avance</button><button class="btn ghost js-edit">Editar</button>`;
+  if(P().del) acts+=`<button class="btn danger js-del">Eliminar</button>`;
+  acts+=`</div>`;
+  openSheet(p.nombre,`<div class="det-row"><span class="k">Estado</span><span class="v"><span class="pill ${p.estado==='FINALIZADO'?'e-rep':p.estado==='EN CURSO'?'e-proc':'e-nueva'}">${esc(p.estado)}</span></span></div>
+    <div class="det-row"><span class="k">Inicio</span><span class="v">${fmtDate(p.fechaInicio)}</span></div>
+    ${p.descripcion?`<div class="det-row"><span class="k">Detalle</span><span class="v">${esc(p.descripcion)}</span></div>`:''}
+    <h3 style="font-size:.95rem;margin:16px 0 8px;color:#f8fafc">Avances</h3>${tl}${acts}`);
+  const up=$('.js-up'); if(up)up.onclick=()=>formUpdate(p);
+  const ed=$('.js-edit'); if(ed)ed.onclick=()=>formProy(p);
+  const dl=$('.js-del'); if(dl)dl.onclick=()=>{if(confirm('¿Eliminar proyecto?')){commit(d=>{d.proyectos=d.proyectos.filter(x=>x.id!==id);},'Eliminar proy '+id);closeSheet();toast('Proyecto eliminado');}};
+}
+function formProy(p){
+  const isNew=!p;
+  const v=p||{nombre:'',descripcion:'',estado:CONFIG.estadosProy[0],fechaInicio:today()};
+  openSheet(isNew?'Nuevo proyecto':'Editar proyecto',
+    `<div class="fld"><label>Nombre</label><input class="in" id="p_nom" value="${esc(v.nombre||'')}"></div>
+     <div class="fld"><label>Descripción</label><textarea class="in" id="p_desc">${esc(v.descripcion||'')}</textarea></div>
+     <div class="fld"><label>Estado</label>${selectHtml('p_estado',CONFIG.estadosProy,v.estado)}</div>
+     <div class="fld"><label>Fecha de inicio</label><input class="in" type="date" id="p_fecha" value="${esc(v.fechaInicio||today())}"></div>
+     <div class="actions"><button class="btn ghost js-cancel">Cancelar</button><button class="btn ok js-save">${isNew?'Crear':'Guardar'}</button></div>`);
+  $('.js-cancel').onclick=closeSheet;
+  $('.js-save').onclick=()=>{
+    const nom=$('#p_nom').value.trim(); if(!nom){toast('Ingresa el nombre','err');return;}
+    const o={id:p?p.id:makeId('PR'),nombre:nom,descripcion:$('#p_desc').value.trim(),estado:$('#p_estado').value,fechaInicio:$('#p_fecha').value};
+    commit(d=>{if(p){const t=d.proyectos.find(x=>x.id===o.id);if(t)Object.assign(t,o);}else d.proyectos.push({...o,updates:[]});},(p?'Editar':'Nuevo')+' proy '+o.id);
+    closeSheet(); toast(p?'Proyecto actualizado':'Proyecto creado');
+  };
+}
+function formUpdate(p){
+  openSheet('Nuevo avance',
+    `<div class="fld"><label>Fecha del avance</label><input class="in" type="date" id="u_fecha" value="${today()}"></div>
+     <div class="fld"><label>Descripción del avance</label><textarea class="in" id="u_text" placeholder="¿Qué se realizó?"></textarea></div>
+     <div class="actions"><button class="btn ghost js-cancel">Cancelar</button><button class="btn ok js-save">Agregar avance</button></div>`);
+  $('.js-cancel').onclick=()=>detalleProy(p.id);
+  $('.js-save').onclick=()=>{
+    const txt=$('#u_text').value.trim(); if(!txt){toast('Escribe el avance','err');return;}
+    const fecha=$('#u_fecha').value||today();
+    commit(d=>{const t=d.proyectos.find(x=>x.id===p.id);if(t)(t.updates=t.updates||[]).push({fecha,texto:txt});},'Avance proy '+p.id);
+    closeSheet(); toast('Avance agregado');
+  };
+}
+
+/* ============================================================
+   8) DATOS Y RESPALDO
+   ============================================================ */
+function openDatos(){
+  const repo = ghMode()==='proxy' ? 'GitHub vía Apps Script (proxy)'
+             : ghMode()==='direct' ? `${esc(GH.owner)}/${esc(GH.repo)} · ${esc(GH.branch)}`
+             : 'Modo local (sin GitHub)';
+  let html=`<div class="det-row"><span class="k">Origen</span><span class="v">${repo}</span></div>
+    <div class="det-row"><span class="k">Usuarios</span><span class="v">${ghEnabled()?esc(GH.usersPath):'locales (en el HTML)'}</span></div>
+    <div class="det-row"><span class="k">Contenido</span><span class="v">${DATA.registros.length} equipos · ${DATA.homologaciones.length} homolog. · ${DATA.proyectos.length} proyectos</span></div>
+    ${ghEnabled()?'<p style="font-size:.78rem;color:var(--muted);margin:10px 0 0">Cada cambio se guarda como commit: el historial del repo es tu respaldo de versiones.</p>':''}
+    <div class="actions"><button class="btn ok js-exp">📥 Descargar backup (.json)</button></div>`;
+  if(ROLE==='ADMIN') html+=`<div class="actions"><button class="btn ghost js-imp">♻️ Restaurar desde archivo</button></div>
+    <div class="fld" style="margin-top:16px"><label>Generar hash SHA-256 (para usuarios.json)</label>
+      <input class="in" id="hgen" placeholder="clave a convertir" autocapitalize="none">
+      <div class="actions"><button class="btn ghost js-hash">Calcular hash</button></div>
+      <div id="hout" style="font-size:.72rem;color:#93c5fd;word-break:break-all;margin-top:4px"></div></div>`;
+  openSheet('Datos y respaldo', html);
+  $('.js-exp').onclick=exportBackup;
+  const imp=$('.js-imp'); if(imp) imp.onclick=pickRestore;
+  const hb=$('.js-hash'); if(hb) hb.onclick=async()=>{ const v=$('#hgen').value||''; if(!v) return; const h=await sha256(v); $('#hout').textContent=h?('"hash":"'+h+'"'):'crypto no disponible en este contexto'; };
+}
+function exportBackup(){
+  const obj={_app:'laboratorio-taller',_exportedAt:new Date().toISOString(),registros:DATA.registros,homologaciones:DATA.homologaciones,proyectos:DATA.proyectos};
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  const t=new Date(),p=n=>String(n).padStart(2,'0');
+  a.href=url; a.download=`backup_laboratorio_${t.getFullYear()}${p(t.getMonth()+1)}${p(t.getDate())}_${p(t.getHours())}${p(t.getMinutes())}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  toast('Backup descargado');
+}
+function pickRestore(){
+  const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json,.json';
+  inp.onchange=()=>{ const f=inp.files&&inp.files[0]; if(!f) return; const fr=new FileReader();
+    fr.onload=()=>{ try{
+        const obj=JSON.parse(fr.result);
+        if(!obj||(!Array.isArray(obj.registros)&&!Array.isArray(obj.homologaciones)&&!Array.isArray(obj.proyectos))) throw 0;
+        if(!confirm('Esto REEMPLAZA todos los datos actuales por los del archivo. ¿Continuar?')) return;
+        commit(d=>{ d.registros=obj.registros||[]; d.homologaciones=obj.homologaciones||[]; d.proyectos=obj.proyectos||[]; },'Restaurar backup');
+        closeSheet(); toast('Backup restaurado');
+      }catch(e){ toast('Archivo no válido','err'); } };
+    fr.readAsText(f);
+  };
+  inp.click();
+}
+
+/* ============================================================
+   9) INIT
+   ============================================================ */
+(async()=>{ await loadUsers(); await loadAll(); if(ROLE) render(); })();
+</script>
+</body>
+</html>

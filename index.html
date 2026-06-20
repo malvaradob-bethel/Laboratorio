@@ -78,7 +78,7 @@ main.content{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padd
 .card .step{height:5px;flex:1;border-radius:999px;background:#334155}
 
 .pill{padding:5px 11px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.2px;border:1px solid;white-space:nowrap;display:inline-block}
-.e-nueva{background:#fed7aa;color:#7c2d12;border-color:#fb923c}
+.e-nueva{background:#e5e7eb;color:#374151;border-color:#9ca3af}
 .e-pend {background:#fecaca;color:#7f1d1d;border-color:#f87171}
 .e-proc {background:#fde68a;color:#713f12;border-color:#f59e0b}
 .e-rep  {background:#bbf7d0;color:#14532d;border-color:#22c55e}
@@ -374,7 +374,7 @@ const $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 function toast(msg,type='ok'){ const t=$('#toast');t.textContent=msg;t.className='';t.classList.add(type,'show');clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),2200); }
 function estClass(e){switch((e||'').toUpperCase()){case 'SOLICITUD NUEVA':return 'e-nueva';case 'PENDIENTE':return 'e-pend';case 'EN PROCESO':return 'e-proc';case 'REPARADO':return 'e-rep';case 'ENTREGADO':return 'e-ent';case 'ALMACÉN':case 'ALMACEN':return 'e-alm';default:return 'e-alm';}}
-function estDot(e){return {'SOLICITUD NUEVA':'#fb923c','PENDIENTE':'#f87171','EN PROCESO':'#f59e0b','REPARADO':'#22c55e','ENTREGADO':'#60a5fa','ALMACÉN':'#9ca3af','ALMACEN':'#9ca3af'}[(e||'').toUpperCase()]||'#3b82f6';}
+function estDot(e){return {'SOLICITUD NUEVA':'#9ca3af','PENDIENTE':'#f87171','EN PROCESO':'#facc15','REPARADO':'#22c55e','ENTREGADO':'#60a5fa','ALMACÉN':'#9ca3af','ALMACEN':'#9ca3af'}[(e||'').toUpperCase()]||'#3b82f6';}
 const P=()=>PERMS[ROLE];
 
 const PERMS={

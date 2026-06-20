@@ -1,0 +1,134 @@
+{
+  "registros": [
+    {
+      "id": "ID-20260612-0930",
+      "fecha": "2026-06-12",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "REPARACION",
+      "estacion": "HUARAZ 100.1 FM",
+      "estado": "ALMACÉN",
+      "trabajo": "Reemplazo de etapa final.",
+      "avances": [
+        {
+          "fecha": "2026-06-12",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Ingreso a taller"
+        },
+        {
+          "fecha": "2026-06-13",
+          "estado": "PENDIENTE",
+          "nota": "En cola de diagnóstico"
+        },
+        {
+          "fecha": "2026-06-15",
+          "estado": "EN PROCESO",
+          "nota": "Reemplazo de etapa final, falta prueba de potencia"
+        },
+        {
+          "fecha": "2026-06-20",
+          "estado": "ALMACÉN",
+          "nota": "A espera del desembolso"
+        }
+      ]
+    },
+    {
+      "id": "ID-20260616-0815",
+      "fecha": "2026-06-16",
+      "equipo": "TRANSMISOR TV",
+      "servicio": "DIAGNOSTICO",
+      "estacion": "CUSCO TDT",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-06-16",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Solicitud registrada por sectorista"
+        }
+      ]
+    },
+    {
+      "id": "ID-20260610-1620",
+      "fecha": "2026-06-10",
+      "equipo": "ESTABILIZADOR",
+      "servicio": "CALIBRACION",
+      "estacion": "TRUJILLO 760 AM",
+      "estado": "REPARADO",
+      "trabajo": "Calibrado y probado.",
+      "avances": [
+        {
+          "fecha": "2026-06-10",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Ingreso"
+        },
+        {
+          "fecha": "2026-06-11",
+          "estado": "EN PROCESO",
+          "nota": "Calibración"
+        },
+        {
+          "fecha": "2026-06-13",
+          "estado": "REPARADO",
+          "nota": "Listo para retiro"
+        }
+      ]
+    },
+    {
+      "id": "ID-20260605-1400",
+      "fecha": "2026-06-05",
+      "equipo": "RECEPTOR",
+      "servicio": "PRUEBA",
+      "estacion": "AREQUIPA SATELITAL",
+      "estado": "ENTREGADO",
+      "trabajo": "Probado OK y entregado.",
+      "avances": [
+        {
+          "fecha": "2026-06-05",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Ingreso"
+        },
+        {
+          "fecha": "2026-06-06",
+          "estado": "REPARADO",
+          "nota": "Probado OK"
+        },
+        {
+          "fecha": "2026-06-08",
+          "estado": "ENTREGADO",
+          "nota": "Entregado a logística"
+        }
+      ]
+    }
+  ],
+  "homologaciones": [
+    {
+      "id": "HM-20260601-1000",
+      "equipo": "TRANSMISOR FM",
+      "marca": "BETHEL FM300",
+      "estacion": "PIURA 100.1 FM",
+      "fechaEnvio": "2026-06-01",
+      "expediente": "EXP-2026-0431",
+      "estado": "EN TRÁMITE",
+      "obs": "Esperando inspección del MTC."
+    }
+  ],
+  "proyectos": [
+    {
+      "id": "PR-20260401-0900",
+      "nombre": "Migración TDT zona norte",
+      "descripcion": "Implementación de transmisores TDT en estaciones del norte.",
+      "estado": "EN CURSO",
+      "fechaInicio": "2026-04-01",
+      "updates": [
+        {
+          "fecha": "2026-06-15",
+          "texto": "Instalado y probado el transmisor de Chiclayo."
+        },
+        {
+          "fecha": "2026-05-20",
+          "texto": "Levantamiento técnico de las 3 estaciones pendientes."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "usuarios": [
+    {"usuario":"Manuel", "rol":"ADMIN",       "hash":"dd4fabed13d6a1ce3cf4c1e701fe2170c0524f541b35d70868931568c6388c90"},
+    {"usuario":"Ruben",  "rol":"LABORATORIO", "hash":"f127efbc1bb5f5f00206b1c3c3a42062812a1dded522705e57d060dba683bf9c"},
+    {"usuario":"Juan",  "rol":"LABORATORIO", "hash":"f368045df8c1b9e2c96c2d61417558b6ac365096fa3415f5b3bc8e32dc45d9dd"},
+    {"usuario":"Apoli",  "rol":"LABORATORIO", "hash":"64e4abf1d3191e1d15b9ab9d0a89761e75473344f421280989218899366d4e64"},
+    {"usuario":"Cesar",  "rol":"SECTORISTA",  "hash":"1e08f85256c9f92878e985baceb91d79449bd1d3b5eab533330f16a735f68f66"},
+  ]
+}

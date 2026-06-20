@@ -58,7 +58,7 @@
       "equipo": "ESTABILIZADOR",
       "servicio": "CALIBRACION",
       "estacion": "TRUJILLO 760 AM",
-      "estado": "REPARADO",
+      "estado": "ENTREGADO",
       "trabajo": "Calibrado y probado.",
       "avances": [
         {
@@ -75,6 +75,11 @@
           "fecha": "2026-06-13",
           "estado": "REPARADO",
           "nota": "Listo para retiro"
+        },
+        {
+          "fecha": "2026-06-20",
+          "estado": "ENTREGADO",
+          "nota": "Entregado a logística"
         }
       ]
     },

@@ -115,7 +115,7 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "Lima",
-      "estado": "REPARADO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
@@ -132,6 +132,11 @@
           "fecha": "2026-06-24",
           "estado": "REPARADO",
           "nota": "Rrfffffff"
+        },
+        {
+          "fecha": "2026-06-24",
+          "estado": "ENTREGADO",
+          "nota": "Wwwwwwww"
         }
       ]
     }

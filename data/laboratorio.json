@@ -57,7 +57,14 @@
           "estado": "SOLICITUD NUEVA",
           "nota": "Solicitud registrada por sectorista"
         }
-      ]
+      ],
+      "prioridad": {
+        "orden": 1,
+        "tipo": "INSPECCIÓN TÉCNICA",
+        "obs": "",
+        "por": "Manuel",
+        "fecha": "2026-07-08"
+      }
     },
     {
       "id": "ID-20260610-1620",

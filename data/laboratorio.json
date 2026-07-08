@@ -156,6 +156,22 @@
         "por": "Manuel",
         "fecha": "2026-07-08"
       }
+    },
+    {
+      "id": "ID-20260708-105739",
+      "fecha": "2026-07-08",
+      "equipo": "TRANSMISOR TV",
+      "servicio": "REPARACION",
+      "estacion": "SICUANI",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-07-08",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

@@ -188,6 +188,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260708-110145",
+      "fecha": "2026-06-19",
+      "equipo": "TRANSMISOR TV",
+      "servicio": "REPARACION",
+      "estacion": "PAUCARTAMBO VHF",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-06-19",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

@@ -3,9 +3,9 @@
     {
       "id": "ID-20260616-0815",
       "fecha": "2026-06-16",
-      "equipo": "TRANSMISOR TV",
-      "servicio": "DIAGNOSTICO",
-      "estacion": "CUSCO TDT",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "REPARACION",
+      "estacion": "PASCO FM",
       "estado": "SOLICITUD NUEVA",
       "trabajo": "",
       "avances": [

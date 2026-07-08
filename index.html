@@ -56,6 +56,7 @@ header.top .who{font-size:.7rem;color:var(--muted)}
 .badge.SECTORISTA{background:#0c4a6e;color:#bfdbfe}
 .badge.LABORATORIO{background:#14532d;color:#bbf7d0}
 .badge.ADMIN{background:#7c2d12;color:#fed7aa}
+.badge.GESTOR{background:#4c1d95;color:#ddd6fe}
 .sync-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;vertical-align:middle}
 .iconbtn{width:36px;height:36px;border-radius:10px;background:var(--card2);border:1px solid var(--border);color:var(--soft);font-size:1rem;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 .searchbar{padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);flex:0 0 auto;display:flex;gap:8px;align-items:center}
@@ -74,6 +75,20 @@ main.content{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padd
 .card .meta .k{color:var(--muted);min-width:74px;flex:0 0 auto}
 .card .id{font-size:.66rem;color:#64748b;margin-top:9px;letter-spacing:.3px}
 .card .trabajo{margin-top:8px;font-size:.8rem;color:var(--muted);background:var(--bg2);border-radius:9px;padding:8px 10px;border:1px solid var(--border)}
+.prio-box{min-width:30px;height:30px;padding:0 7px;border-radius:9px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 2px 8px rgba(220,38,38,.4)}
+.prio-line{margin-top:8px;font-size:.76rem;color:#fca5a5;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.4);border-radius:9px;padding:7px 10px;font-weight:600}
+.prio-line .obs{display:block;color:#e2e8f0;font-weight:400;margin-top:3px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px}
+.stat .n{font-size:1.55rem;font-weight:800;color:#f8fafc;line-height:1.1}
+.stat .l{font-size:.7rem;color:var(--muted);margin-top:3px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:11px}
+.panel h4{margin:0 0 11px;font-size:.82rem;color:#cbd5e1;text-transform:uppercase;letter-spacing:.4px}
+.brow{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.76rem}
+.brow .bl{min-width:112px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .bt{flex:1;height:8px;background:#0b1220;border-radius:999px;overflow:hidden}
+.brow .bf{height:100%;border-radius:999px}
+.brow .bn{min-width:22px;text-align:right;color:var(--muted)}
 .card .stepbar{display:flex;gap:4px;margin-top:10px}
 .card .step{height:5px;flex:1;border-radius:999px;background:#334155}
 
@@ -187,13 +202,15 @@ const CONFIG = {
   servicios:['PRUEBA','DIAGNOSTICO','REPARACION','MANTENIMIENTO','REESTRUCTURACION','CALIBRACION','FABRICACION'],
   estados:  ['SOLICITUD NUEVA','PENDIENTE','EN PROCESO','REPARADO','ENTREGADO','ALMACÉN'],
   estadosHom: ['EN TRÁMITE','OBSERVADO','HOMOLOGADO'],
-  estadosProy:['PLANIFICADO','EN CURSO','PAUSADO','FINALIZADO']
+  estadosProy:['PLANIFICADO','EN CURSO','PAUSADO','FINALIZADO'],
+  prioTipos:['RENOVACIÓN','VPP','INSPECCIÓN TÉCNICA']
 };
 
 /* Usuarios para MODO LOCAL (sin GitHub). En producción se leen de usuarios.json.
    Cada usuario: { usuario, rol, hash? , pass? }  — usa hash (SHA-256) en el repo. */
 const USUARIOS_DEFAULT = [
   {usuario:'sectorista',  rol:'SECTORISTA',  pass:'sector2025'},
+  {usuario:'gestor',      rol:'GESTOR',      pass:'gestor2025'},
   {usuario:'laboratorio', rol:'LABORATORIO', pass:'lab2025'},
   {usuario:'admin',       rol:'ADMIN',       pass:'admin2025'}
 ];
@@ -378,11 +395,12 @@ function estDot(e){return {'SOLICITUD NUEVA':'#9ca3af','PENDIENTE':'#f87171','EN
 const P=()=>PERMS[ROLE];
 
 const PERMS={
-  SECTORISTA:{tabs:['registro'],addReg:true,editReg:false,estado:false,del:false},
-  LABORATORIO:{tabs:['registro','historial','homologaciones','proyectos'],addReg:true,editReg:true,estado:true,del:false},
-  ADMIN:{tabs:['registro','historial','homologaciones','proyectos'],addReg:true,editReg:true,estado:true,del:true}
+  SECTORISTA:{tabs:['registro'],addReg:true,editReg:false,estado:false,del:false,prio:false,reporte:false},
+  GESTOR:{tabs:['registro','resumen'],addReg:true,editReg:false,estado:false,del:false,prio:true,reporte:false},
+  LABORATORIO:{tabs:['registro','historial','homologaciones','proyectos','resumen'],addReg:true,editReg:true,estado:true,del:false,prio:false,reporte:true},
+  ADMIN:{tabs:['registro','historial','homologaciones','proyectos','resumen'],addReg:true,editReg:true,estado:true,del:true,prio:true,reporte:true}
 };
-const TAB_META={registro:{t:'Registro',i:'📋'},historial:{t:'Historial',i:'🗂️'},homologaciones:{t:'Homologaciones',i:'📡'},proyectos:{t:'Proyectos',i:'🚧'}};
+const TAB_META={registro:{t:'Registro',i:'📋'},historial:{t:'Historial',i:'🗂️'},homologaciones:{t:'Homologaciones',i:'📡'},proyectos:{t:'Proyectos',i:'🚧'},resumen:{t:'Resumen',i:'📊'}};
 
 function openSheet(title,html){ $('#sheetTitle').textContent=title; $('#sheetBody').innerHTML=html; $('#backdrop').classList.add('show'); $('#sheet').classList.add('show'); }
 function closeSheet(){ $('#backdrop').classList.remove('show'); $('#sheet').classList.remove('show'); }
@@ -452,14 +470,20 @@ function render(){
   else if(TAB==='historial')renderRegistro(true);
   else if(TAB==='homologaciones')renderHom();
   else if(TAB==='proyectos')renderProy();
+  else if(TAB==='resumen')renderResumen();
 }
 function emptyBox(ico,txt,sub){return `<div class="empty"><div class="big">${ico}</div><p>${esc(txt)}</p>${sub?`<p style="opacity:.7">${esc(sub)}</p>`:''}</div>`;}
 
 function renderRegistro(historial){
   const q=($('#q').value||'').toLowerCase();
   let list=DATA.registros.filter(r=>historial?(r.estado||'').toUpperCase()==='ENTREGADO':(r.estado||'').toUpperCase()!=='ENTREGADO');
-  if(q) list=list.filter(r=>[r.id,r.fecha,r.equipo,r.servicio,r.estacion,r.estado,r.trabajo].some(v=>String(v||'').toLowerCase().includes(q)));
-  list.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  if(q) list=list.filter(r=>[r.id,r.fecha,r.equipo,r.servicio,r.estacion,r.estado,r.trabajo,(r.prioridad&&r.prioridad.tipo)||''].some(v=>String(v||'').toLowerCase().includes(q)));
+  list.sort((a,b)=>{
+    const pa=a.prioridad&&a.prioridad.orden, pb=b.prioridad&&b.prioridad.orden;
+    if(pa&&pb) return pa-pb;                 // ambos con prioridad: por número
+    if(pa) return -1; if(pb) return 1;       // prioridad primero
+    return (b.fecha||'').localeCompare(a.fecha||'');
+  });
   $('#count').textContent=`${list.length} equipo(s)`;
   const c=$('#content');
   if(!list.length){c.innerHTML=emptyBox(historial?'🗂️':'📋',historial?'Sin equipos entregados aún.':'No hay equipos en el taller.',historial?'':(P().addReg?'Toca + para registrar un ingreso.':''));return;}
@@ -468,29 +492,40 @@ function renderRegistro(historial){
     const cls=estClass(r.estado), tap=P().estado;
     const idx=Math.max(0,flow.indexOf((r.estado||'').toUpperCase()));
     const steps=flow.map((f,i)=>`<span class="step" style="background:${i<=idx?estDot(f):'#334155'}"></span>`).join('');
+    const pr=r.prioridad&&r.prioridad.orden?r.prioridad:null;
+    const prBox=pr?`<span class="prio-box ${P().prio?'js-prio':''}" data-id="${esc(r.id)}">${pr.orden}</span>`:'';
+    const prLine=(pr&&!historial)?`<div class="prio-line">🔥 URGENTE ${pr.orden} · ${esc(pr.tipo||'')}${pr.obs?`<span class="obs">${esc(pr.obs)}</span>`:''}</div>`:'';
     return `<div class="card" data-id="${esc(r.id)}">
-      <div class="row1"><div class="eq">${esc(r.equipo)}</div><span class="pill ${cls} ${tap?'tap js-av':''}" data-id="${esc(r.id)}">${esc(r.estado||'—')}</span></div>
+      <div class="row1"><div style="display:flex;gap:9px;align-items:center;min-width:0">${prBox}<div class="eq">${esc(r.equipo)}</div></div><span class="pill ${cls} ${tap?'tap js-av':''}" data-id="${esc(r.id)}">${esc(r.estado||'—')}</span></div>${prLine}
       <div class="meta"><div><span class="k">Servicio</span> ${esc(r.servicio||'—')}</div><div><span class="k">Estación</span> ${esc(r.estacion||'—')}</div><div><span class="k">Ingreso</span> ${fmtDate(r.fecha)}</div></div>
       <div class="stepbar">${steps}</div>
       ${r.trabajo?`<div class="trabajo">🔧 ${esc(r.trabajo)}</div>`:''}
       <div class="id">${esc(r.id)} · ${(r.avances||[]).length} avance(s)</div>
     </div>`;
   }).join('');
-  $$('.card',c).forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('.js-av'))return;detalleRegistro(card.dataset.id);}));
+  $$('.card',c).forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('.js-av')||e.target.closest('.js-prio'))return;detalleRegistro(card.dataset.id);}));
   $$('.js-av',c).forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();avanceRegistro(p.dataset.id);}));
+  $$('.js-prio',c).forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();formPrio(p.dataset.id);}));
 }
 
 function detalleRegistro(id){
   const r=DATA.registros.find(x=>x.id===id); if(!r) return;
-  const rows=[['Estado',`<span class="pill ${estClass(r.estado)}">${esc(r.estado||'—')}</span>`],['Equipo',esc(r.equipo)],['Servicio',esc(r.servicio)],['Estación',esc(r.estacion)],['Ingreso',fmtDate(r.fecha)],['Trabajo',esc(r.trabajo||'—')],['ID',`<span style="font-size:.75rem;color:#64748b">${esc(r.id)}</span>`]]
+  const pr=r.prioridad&&r.prioridad.orden?r.prioridad:null;
+  const rows=[['Estado',`<span class="pill ${estClass(r.estado)}">${esc(r.estado||'—')}</span>`],
+    ['Prioridad', pr?`<b style="color:#f87171">URGENTE ${pr.orden}</b> · ${esc(pr.tipo||'')}${pr.obs?`<div style="font-size:.8rem;color:var(--muted)">${esc(pr.obs)}</div>`:''}`:'—'],
+    ['Equipo',esc(r.equipo)],['Servicio',esc(r.servicio)],['Estación',esc(r.estacion)],['Ingreso',fmtDate(r.fecha)],['Trabajo',esc(r.trabajo||'—')],['ID',`<span style="font-size:.75rem;color:#64748b">${esc(r.id)}</span>`]]
     .map(([k,v])=>`<div class="det-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
   let acts='';
   if(P().estado) acts+=`<button class="btn ok js-av">+ Avance</button>`;
+  if(P().prio) acts+=`<button class="btn ghost js-pr">🔥 Prioridad</button>`;
+  if(P().reporte) acts+=`<button class="btn ghost js-rep">📋 Reporte</button>`;
   if(P().editReg) acts+=`<button class="btn ghost js-edit">Editar</button>`;
   if(P().del) acts+=`<button class="btn danger js-del">Eliminar</button>`;
   acts=acts?`<div class="actions">${acts}</div>`:'';
   openSheet('Detalle del equipo', rows+`<h3 style="font-size:.95rem;margin:16px 0 8px;color:#f8fafc">Avances</h3>`+timelineRegistro(r.avances)+acts);
   const av=$('.js-av'); if(av)av.onclick=()=>avanceRegistro(id);
+  const prb=$('.js-pr'); if(prb)prb.onclick=()=>formPrio(id);
+  const rep=$('.js-rep'); if(rep)rep.onclick=()=>reporteEquipo(id);
   const ed=$('.js-edit'); if(ed)ed.onclick=()=>formRegistro(r);
   const dl=$('.js-del'); if(dl)dl.onclick=()=>{if(confirm('¿Eliminar este registro?')){commit(d=>{d.registros=d.registros.filter(x=>x.id!==id);},'Eliminar '+id);closeSheet();toast('Registro eliminado');}};
 }
@@ -514,7 +549,7 @@ function avanceRegistro(id){
 }
 
 function formRegistro(r){
-  const isNew=!r, basic=ROLE==='SECTORISTA';
+  const isNew=!r, basic=(ROLE==='SECTORISTA'||ROLE==='GESTOR');
   const v=r||{fecha:today(),equipo:CONFIG.equipos[0],servicio:CONFIG.servicios[0],estacion:'',estado:'SOLICITUD NUEVA',trabajo:''};
   let html=`<div class="fld"><label>Fecha de ingreso</label><input class="in" type="date" id="f_fecha" value="${esc(v.fecha||today())}"></div>
     <div class="fld"><label>Equipo</label>${selectHtml('f_equipo',CONFIG.equipos,v.equipo)}</div>
@@ -537,6 +572,118 @@ function formRegistro(r){
     }, (r?'Editar ':'Nuevo ')+'registro '+obj.id);
     closeSheet(); toast(r?'Registro actualizado':(basic?'Solicitud enviada':'Registro creado'));
   };
+}
+
+
+/* ----- PRIORIDADES (GESTOR / ADMIN) ----- */
+function formPrio(id){
+  const r=DATA.registros.find(x=>x.id===id); if(!r) return;
+  const v=r.prioridad||{orden:'',tipo:CONFIG.prioTipos[0],obs:''};
+  let tipoSel=v.tipo||CONFIG.prioTipos[0];
+  openSheet('Prioridad de atención',
+    `<div class="fld"><label>N° de prioridad (vacío = quitar)</label><input class="in" type="number" min="1" max="99" id="pr_num" value="${v.orden||''}" placeholder="1, 2, 3…"></div>
+     <div class="fld"><label>Tipo</label><div class="est-grid" id="prChips">${CONFIG.prioTipos.map(t=>`<button type="button" class="est-opt js-t ${t===tipoSel?'sel':''}" data-t="${esc(t)}"><span>${esc(t)}</span></button>`).join('')}</div></div>
+     <div class="fld"><label>Observación (opcional)</label><textarea class="in" id="pr_obs" placeholder="Motivo o detalle…">${esc(v.obs||'')}</textarea></div>
+     <div class="actions"><button class="btn ghost js-cancel">Cancelar</button><button class="btn ok js-save">Guardar</button></div>`);
+  const chips=$$('#prChips .js-t'); chips.forEach(b=>b.onclick=()=>{tipoSel=b.dataset.t;chips.forEach(x=>x.classList.toggle('sel',x===b));});
+  $('.js-cancel').onclick=closeSheet;
+  $('.js-save').onclick=()=>{
+    const n=parseInt($('#pr_num').value,10);
+    const obs=$('#pr_obs').value.trim();
+    commit(d=>{const t=d.registros.find(x=>x.id===id);if(!t)return;
+      if(!n||n<1){ delete t.prioridad; }
+      else t.prioridad={orden:n,tipo:tipoSel,obs,por:CURRENT_USER||'',fecha:today()};
+    },'Prioridad '+id);
+    closeSheet(); toast(!n?'Prioridad quitada':'Prioridad '+n+' asignada');
+  };
+}
+
+/* ----- REPORTE AL PORTAPAPELES (LABORATORIO / ADMIN) ----- */
+function reporteEquipo(id){
+  const r=DATA.registros.find(x=>x.id===id); if(!r) return;
+  const ups=(r.avances||[]).slice().sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||''));
+  const pr=r.prioridad&&r.prioridad.orden?r.prioridad:null;
+  const L=[];
+  L.push('INFORME DE EQUIPO — LABORATORIO');
+  L.push('Unidad Técnica · Red Nacional Radio y Televisión · Bethel');
+  L.push('='.repeat(46));
+  L.push('ID:               '+(r.id||'—'));
+  L.push('Equipo:           '+(r.equipo||'—'));
+  L.push('Servicio:         '+(r.servicio||'—'));
+  L.push('Estación:         '+(r.estacion||'—'));
+  L.push('Fecha de ingreso: '+fmtDate(r.fecha));
+  L.push('Estado actual:    '+(r.estado||'—'));
+  if(pr) L.push('Prioridad:        URGENTE '+pr.orden+' · '+(pr.tipo||'')+(pr.obs?' — '+pr.obs:''));
+  L.push('');
+  L.push('TRABAJO REALIZADO');
+  L.push(r.trabajo?r.trabajo:'—');
+  L.push('');
+  L.push('HISTORIAL DE ATENCIÓN');
+  if(ups.length) ups.forEach(a=>L.push('- '+fmtDate(a.fecha)+' · '+(a.estado||'')+(a.nota?' — '+a.nota:'')));
+  else L.push('- Sin avances registrados');
+  L.push('');
+  L.push('Generado: '+fmtDate(today())+(CURRENT_USER?' · '+CURRENT_USER:''));
+  const txt=L.join('\n');
+  copyText(txt).then(ok=>{ if(ok) toast('Reporte copiado al portapapeles'); else toast('No se pudo copiar','err'); });
+}
+async function copyText(txt){
+  try{ await navigator.clipboard.writeText(txt); return true; }
+  catch(e){
+    try{
+      const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      const ok=document.execCommand('copy'); ta.remove(); return ok;
+    }catch(e2){ return false; }
+  }
+}
+
+/* ----- RESUMEN (dashboard de estadísticas) ----- */
+function renderResumen(){
+  const c=$('#content');
+  const regs=DATA.registros||[];
+  const act=regs.filter(r=>(r.estado||'').toUpperCase()!=='ENTREGADO');
+  const ent=regs.filter(r=>(r.estado||'').toUpperCase()==='ENTREGADO');
+  const prios=act.filter(r=>r.prioridad&&r.prioridad.orden).sort((a,b)=>a.prioridad.orden-b.prioridad.orden);
+  const proyAct=(DATA.proyectos||[]).filter(p=>p.estado!=='FINALIZADO').length;
+
+  // promedio de días en taller (equipos activos)
+  const now=new Date();
+  const dias=act.map(r=>{const d=new Date(r.fecha);return isNaN(d)?null:Math.max(0,Math.round((now-d)/86400000));}).filter(x=>x!=null);
+  const prom=dias.length?Math.round(dias.reduce((a,b)=>a+b,0)/dias.length):0;
+
+  const barras=(items,colorFn)=>{
+    const max=Math.max(1,...items.map(x=>x[1]));
+    return items.map(([k,v])=>`<div class="brow"><span class="bl">${esc(k)}</span><span class="bt"><span class="bf" style="width:${Math.round(v/max*100)}%;background:${colorFn(k)}"></span></span><span class="bn">${v}</span></div>`).join('');
+  };
+  const cuenta=(list,key)=>{const m={};list.forEach(r=>{const k=r[key]||'—';m[k]=(m[k]||0)+1;});return Object.entries(m).sort((a,b)=>b[1]-a[1]);};
+
+  const porEstado=CONFIG.estados.filter(e=>e!=='ENTREGADO').map(e=>[e,act.filter(r=>(r.estado||'').toUpperCase()===e.toUpperCase()).length]).filter(x=>x[1]>0);
+  const porEquipo=cuenta(act,'equipo');
+  const porServicio=cuenta(act,'servicio');
+
+  const prioHtml=prios.length?prios.slice(0,8).map(r=>`
+    <div class="card" data-id="${esc(r.id)}" style="margin-bottom:8px;padding:11px">
+      <div class="row1"><div style="display:flex;gap:9px;align-items:center;min-width:0"><span class="prio-box">${r.prioridad.orden}</span><div><div class="eq" style="font-size:.9rem">${esc(r.equipo)}</div><div style="font-size:.72rem;color:var(--muted)">${esc(r.estacion||'')}</div></div></div><span class="pill ${estClass(r.estado)}">${esc(r.estado)}</span></div>
+      <div style="font-size:.72rem;color:#fca5a5;margin-top:6px">${esc(r.prioridad.tipo||'')}${r.prioridad.obs?' — '+esc(r.prioridad.obs):''}</div>
+    </div>`).join('')
+    :'<p style="color:var(--muted);font-size:.83rem;margin:0">Sin prioridades asignadas.</p>';
+
+  c.innerHTML=`
+    <div class="stats">
+      <div class="stat"><div class="n">${act.length}</div><div class="l">En taller</div></div>
+      <div class="stat"><div class="n">${ent.length}</div><div class="l">Entregados</div></div>
+      <div class="stat"><div class="n" style="color:#f87171">${prios.length}</div><div class="l">Con prioridad</div></div>
+      <div class="stat"><div class="n">${prom}<span style="font-size:.85rem;color:var(--muted)"> días</span></div><div class="l">Promedio en taller</div></div>
+    </div>
+    <div class="panel"><h4>🔥 Orden de atención</h4>${prioHtml}</div>
+    ${porEstado.length?`<div class="panel"><h4>Por estado</h4>${barras(porEstado,e=>estDot(e))}</div>`:''}
+    ${porEquipo.length?`<div class="panel"><h4>Por tipo de equipo</h4>${barras(porEquipo,()=>'#3b82f6')}</div>`:''}
+    ${porServicio.length?`<div class="panel"><h4>Por servicio</h4>${barras(porServicio,()=>'#8b5cf6')}</div>`:''}
+    <div class="panel"><h4>Otras áreas</h4>
+      <div class="brow"><span class="bl">Homologaciones</span><span class="bn" style="min-width:auto">${(DATA.homologaciones||[]).length}</span></div>
+      <div class="brow" style="margin-bottom:0"><span class="bl">Proyectos activos</span><span class="bn" style="min-width:auto">${proyAct}</span></div>
+    </div>`;
+  $$('.card',c).forEach(card=>card.onclick=()=>detalleRegistro(card.dataset.id));
 }
 
 /* ----- HOMOLOGACIONES ----- */

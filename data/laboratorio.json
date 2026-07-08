@@ -172,6 +172,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260708-110019",
+      "fecha": "2026-06-10",
+      "equipo": "TRANSMISOR TV",
+      "servicio": "REPARACION",
+      "estacion": "CHINCHEROS - APURIMAC",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-06-10",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

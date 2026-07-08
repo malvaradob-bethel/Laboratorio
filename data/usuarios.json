@@ -1,9 +1,14 @@
 {
   "usuarios": [
     {"usuario":"Manuel", "rol":"ADMIN",       "hash":"dd4fabed13d6a1ce3cf4c1e701fe2170c0524f541b35d70868931568c6388c90"},
+    {"usuario":"AbelB", "rol":"GESTOR",      "hash":"7a09f4d924a1e8612a52d5a190c2d7265241ba072ec940c08f1d31e8630cb2bc"},
+    {"usuario":"AbelC", "rol":"GESTOR",      "hash":"e564e6a0d058882ef6e6ba62a3cfbf91ae47d732fe111e3df93d5f0e594fd5a6"},
+    {"usuario":"Israel",  "rol":"LABORATORIO", "hash":"3280cc652194412bbecab76e91b042ddc07733e32f9062f24a63642e36547c3c"},
     {"usuario":"Ruben",  "rol":"LABORATORIO", "hash":"f127efbc1bb5f5f00206b1c3c3a42062812a1dded522705e57d060dba683bf9c"},
     {"usuario":"Juan",  "rol":"LABORATORIO", "hash":"f368045df8c1b9e2c96c2d61417558b6ac365096fa3415f5b3bc8e32dc45d9dd"},
     {"usuario":"Apoli",  "rol":"LABORATORIO", "hash":"64e4abf1d3191e1d15b9ab9d0a89761e75473344f421280989218899366d4e64"},
-    {"usuario":"Cesar",  "rol":"SECTORISTA",  "hash":"1e08f85256c9f92878e985baceb91d79449bd1d3b5eab533330f16a735f68f66"}
+    {"usuario":"Cesar",  "rol":"SECTORISTA",  "hash":"1e08f85256c9f92878e985baceb91d79449bd1d3b5eab533330f16a735f68f66"},
+    {"usuario":"Ester",  "rol":"SECTORISTA", "hash":"0a4f2ee4a12408189681ee3a0c5351b8cb458e89b950d7d7bc3f7093a312a287"},
+    {"usuario":"Ruth",  "rol":"SECTORISTA",  "hash":"f6f4a68ffee3946897fd98ace4798fd7c45d4d43d126199efc7069cc714a65b5"}
   ]
 }

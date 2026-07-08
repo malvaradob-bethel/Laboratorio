@@ -34,7 +34,14 @@
           "estado": "REPARADO",
           "nota": "Se terminó de probar, está listo para ser enviado"
         }
-      ]
+      ],
+      "prioridad": {
+        "orden": 1,
+        "tipo": "RENOVACIÓN",
+        "obs": "",
+        "por": "Manuel",
+        "fecha": "2026-07-08"
+      }
     },
     {
       "id": "ID-20260616-0815",

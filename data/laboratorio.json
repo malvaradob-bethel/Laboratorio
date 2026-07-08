@@ -1,29 +1,6 @@
 {
   "registros": [
     {
-      "id": "ID-20260616-0815",
-      "fecha": "2026-06-16",
-      "equipo": "TRANSMISOR FM",
-      "servicio": "REPARACION",
-      "estacion": "PASCO FM",
-      "estado": "SOLICITUD NUEVA",
-      "trabajo": "",
-      "avances": [
-        {
-          "fecha": "2026-06-16",
-          "estado": "SOLICITUD NUEVA",
-          "nota": "Solicitud registrada por sectorista"
-        }
-      ],
-      "prioridad": {
-        "orden": 2,
-        "tipo": "INSPECCIÓN TÉCNICA",
-        "obs": "",
-        "por": "Manuel",
-        "fecha": "2026-07-08"
-      }
-    },
-    {
       "id": "ID-20260610-1620",
       "fecha": "2026-06-10",
       "equipo": "ESTABILIZADOR",

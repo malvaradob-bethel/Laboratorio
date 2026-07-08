@@ -220,6 +220,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260708-110358",
+      "fecha": "2026-05-29",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "PRUEBA",
+      "estacion": "PASCO FM",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-05-29",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

@@ -204,6 +204,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260708-110312",
+      "fecha": "2026-05-15",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "REESTRUCTURACION",
+      "estacion": "HUANCAPALLAC",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-05-15",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

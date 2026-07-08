@@ -102,7 +102,14 @@
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
         }
-      ]
+      ],
+      "prioridad": {
+        "orden": 1,
+        "tipo": "RENOVACIÓN",
+        "obs": "Solicitud ingresada 28 junio",
+        "por": "Manuel",
+        "fecha": "2026-07-08"
+      }
     }
   ],
   "homologaciones": [

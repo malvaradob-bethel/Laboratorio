@@ -1,49 +1,6 @@
 {
   "registros": [
     {
-      "id": "ID-20260612-0930",
-      "fecha": "2026-06-12",
-      "equipo": "TRANSMISOR FM",
-      "servicio": "REPARACION",
-      "estacion": "HUARAZ 100.1 FM",
-      "estado": "REPARADO",
-      "trabajo": "Reemplazo de etapa final.",
-      "avances": [
-        {
-          "fecha": "2026-06-12",
-          "estado": "SOLICITUD NUEVA",
-          "nota": "Ingreso a taller"
-        },
-        {
-          "fecha": "2026-06-13",
-          "estado": "PENDIENTE",
-          "nota": "En cola de diagnóstico"
-        },
-        {
-          "fecha": "2026-06-15",
-          "estado": "EN PROCESO",
-          "nota": "Reemplazo de etapa final, falta prueba de potencia"
-        },
-        {
-          "fecha": "2026-06-20",
-          "estado": "ALMACÉN",
-          "nota": "A espera del desembolso"
-        },
-        {
-          "fecha": "2026-06-20",
-          "estado": "REPARADO",
-          "nota": "Se terminó de probar, está listo para ser enviado"
-        }
-      ],
-      "prioridad": {
-        "orden": 1,
-        "tipo": "RENOVACIÓN",
-        "obs": "",
-        "por": "Manuel",
-        "fecha": "2026-07-08"
-      }
-    },
-    {
       "id": "ID-20260616-0815",
       "fecha": "2026-06-16",
       "equipo": "TRANSMISOR TV",

@@ -253,8 +253,8 @@
   "proyectos": [
     {
       "id": "PR-20260401-0900",
-      "nombre": "Migración TDT zona norte",
-      "descripcion": "Implementación de transmisores TDT en estaciones del norte.",
+      "nombre": "INTERFACE WEB TRANSMISOR FM",
+      "descripcion": "Implementación de interface web para transmisores nacionales FM, con lectura de parametros de potencia, voltaje",
       "estado": "EN CURSO",
       "fechaInicio": "2026-04-01",
       "updates": [

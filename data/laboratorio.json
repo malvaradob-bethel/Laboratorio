@@ -32,32 +32,6 @@
       ]
     },
     {
-      "id": "ID-20260605-1400",
-      "fecha": "2026-06-05",
-      "equipo": "RECEPTOR",
-      "servicio": "PRUEBA",
-      "estacion": "AREQUIPA SATELITAL",
-      "estado": "ENTREGADO",
-      "trabajo": "Probado OK y entregado.",
-      "avances": [
-        {
-          "fecha": "2026-06-05",
-          "estado": "SOLICITUD NUEVA",
-          "nota": "Ingreso"
-        },
-        {
-          "fecha": "2026-06-06",
-          "estado": "REPARADO",
-          "nota": "Probado OK"
-        },
-        {
-          "fecha": "2026-06-08",
-          "estado": "ENTREGADO",
-          "nota": "Entregado a logística"
-        }
-      ]
-    },
-    {
       "id": "ID-20260624-133028",
       "fecha": "2026-06-24",
       "equipo": "TRANSMISOR TV",

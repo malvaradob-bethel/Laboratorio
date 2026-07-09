@@ -179,6 +179,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260709-101150",
+      "fecha": "2026-07-01",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "REPARACION",
+      "estacion": "VILLA RICA FM",
+      "estado": "EN PROCESO",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-07-01",
+          "estado": "EN PROCESO",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

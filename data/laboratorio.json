@@ -65,13 +65,18 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "MANTENIMIENTO",
       "estacion": "RIO TAMBO - PUERTO OCOPA",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "EN PROCESO",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-07-08",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-09",
+          "estado": "EN PROCESO",
+          "nota": ""
         }
       ],
       "prioridad": {

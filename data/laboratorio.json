@@ -211,6 +211,22 @@
           "nota": "Registro creado"
         }
       ]
+    },
+    {
+      "id": "ID-20260709-114622",
+      "fecha": "2026-07-09",
+      "equipo": "TRANSMISOR FM",
+      "servicio": "REPARACION",
+      "estacion": "CANDARAVE FM",
+      "estado": "SOLICITUD NUEVA",
+      "trabajo": "",
+      "avances": [
+        {
+          "fecha": "2026-07-09",
+          "estado": "SOLICITUD NUEVA",
+          "nota": "Registro creado"
+        }
+      ]
     }
   ],
   "homologaciones": [

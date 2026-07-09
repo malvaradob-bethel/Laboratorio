@@ -93,13 +93,18 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "PRUEBA",
       "estacion": "QUINCE MIL FM",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "PENDIENTE",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-07-08",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-09",
+          "estado": "PENDIENTE",
+          "nota": ""
         }
       ],
       "prioridad": {

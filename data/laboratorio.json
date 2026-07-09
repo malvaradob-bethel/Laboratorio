@@ -1,37 +1,6 @@
 {
   "registros": [
     {
-      "id": "ID-20260610-1620",
-      "fecha": "2026-06-10",
-      "equipo": "ESTABILIZADOR",
-      "servicio": "CALIBRACION",
-      "estacion": "TRUJILLO 760 AM",
-      "estado": "ENTREGADO",
-      "trabajo": "Calibrado y probado.",
-      "avances": [
-        {
-          "fecha": "2026-06-10",
-          "estado": "SOLICITUD NUEVA",
-          "nota": "Ingreso"
-        },
-        {
-          "fecha": "2026-06-11",
-          "estado": "EN PROCESO",
-          "nota": "Calibración"
-        },
-        {
-          "fecha": "2026-06-13",
-          "estado": "REPARADO",
-          "nota": "Listo para retiro"
-        },
-        {
-          "fecha": "2026-06-20",
-          "estado": "ENTREGADO",
-          "nota": "Entregado a logística"
-        }
-      ]
-    },
-    {
       "id": "ID-20260624-133028",
       "fecha": "2026-06-24",
       "equipo": "TRANSMISOR TV",

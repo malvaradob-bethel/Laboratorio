@@ -227,13 +227,18 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "REPARACION",
       "estacion": "CANDARAVE FM",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "PENDIENTE",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-07-09",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "PENDIENTE",
+          "nota": ""
         }
       ]
     },

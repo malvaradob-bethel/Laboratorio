@@ -179,13 +179,18 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "PRUEBA",
       "estacion": "PASCO FM",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "EN PROCESO",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-05-29",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "EN PROCESO",
+          "nota": ""
         }
       ]
     },

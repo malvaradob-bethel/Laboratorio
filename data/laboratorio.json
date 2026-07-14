@@ -1,37 +1,6 @@
 {
   "registros": [
     {
-      "id": "ID-20260624-133028",
-      "fecha": "2026-06-24",
-      "equipo": "TRANSMISOR TV",
-      "servicio": "REPARACION",
-      "estacion": "Lima",
-      "estado": "ENTREGADO",
-      "trabajo": "",
-      "avances": [
-        {
-          "fecha": "2026-06-24",
-          "estado": "SOLICITUD NUEVA",
-          "nota": "Solicitud registrada"
-        },
-        {
-          "fecha": "2026-06-24",
-          "estado": "EN PROCESO",
-          "nota": ""
-        },
-        {
-          "fecha": "2026-06-24",
-          "estado": "REPARADO",
-          "nota": "Rrfffffff"
-        },
-        {
-          "fecha": "2026-06-24",
-          "estado": "ENTREGADO",
-          "nota": "Wwwwwwww"
-        }
-      ]
-    },
-    {
       "id": "ID-20260708-105254",
       "fecha": "2026-06-10",
       "equipo": "TRANSMISOR FM",

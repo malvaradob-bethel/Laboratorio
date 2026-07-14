@@ -95,7 +95,7 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "SICUANI",
-      "estado": "PENDIENTE",
+      "estado": "EN PROCESO",
       "trabajo": "",
       "avances": [
         {
@@ -106,6 +106,11 @@
         {
           "fecha": "2026-07-14",
           "estado": "PENDIENTE",
+          "nota": ""
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "EN PROCESO",
           "nota": ""
         }
       ]

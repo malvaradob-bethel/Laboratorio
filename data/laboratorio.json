@@ -95,13 +95,18 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "SICUANI",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "PENDIENTE",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-07-08",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "PENDIENTE",
+          "nota": ""
         }
       ]
     },

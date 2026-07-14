@@ -201,13 +201,18 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "REPARACION",
       "estacion": "VILLA RICA FM",
-      "estado": "EN PROCESO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-07-01",
           "estado": "EN PROCESO",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "ENTREGADO",
+          "nota": "Listo para enviar"
         }
       ]
     },

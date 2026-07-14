@@ -137,13 +137,18 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "CHINCHEROS - APURIMAC",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "REPARADO",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-06-10",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "REPARADO",
+          "nota": "Listo para enviar"
         }
       ]
     },

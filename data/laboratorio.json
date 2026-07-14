@@ -132,13 +132,18 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "PAUCARTAMBO VHF",
-      "estado": "SOLICITUD NUEVA",
+      "estado": "PENDIENTE",
       "trabajo": "",
       "avances": [
         {
           "fecha": "2026-06-19",
           "estado": "SOLICITUD NUEVA",
           "nota": "Registro creado"
+        },
+        {
+          "fecha": "2026-07-14",
+          "estado": "PENDIENTE",
+          "nota": ""
         }
       ]
     },

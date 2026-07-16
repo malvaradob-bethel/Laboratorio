@@ -6,7 +6,7 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "PRUEBA",
       "estacion": "MONZON FM",
-      "estado": "REPARADO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
@@ -23,6 +23,11 @@
           "fecha": "2026-07-14",
           "estado": "REPARADO",
           "nota": "Listo para enviar"
+        },
+        {
+          "fecha": "2026-07-16",
+          "estado": "ENTREGADO",
+          "nota": ""
         }
       ],
       "prioridad": {

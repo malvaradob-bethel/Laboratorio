@@ -276,22 +276,6 @@
       ]
     },
     {
-      "id": "ID-20260709-101242",
-      "fecha": "2026-07-01",
-      "equipo": "TRANSMISOR FM",
-      "servicio": "REPARACION",
-      "estacion": "HUANCANE FM",
-      "estado": "PENDIENTE",
-      "trabajo": "",
-      "avances": [
-        {
-          "fecha": "2026-07-01",
-          "estado": "PENDIENTE",
-          "nota": "Registro creado"
-        }
-      ]
-    },
-    {
       "id": "ID-20260709-114622",
       "fecha": "2026-07-09",
       "equipo": "TRANSMISOR FM",

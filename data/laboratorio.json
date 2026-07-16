@@ -115,7 +115,7 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "SICUANI",
-      "estado": "REPARADO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
@@ -137,6 +137,11 @@
           "fecha": "2026-07-16",
           "estado": "REPARADO",
           "nota": "Listo para enviar"
+        },
+        {
+          "fecha": "2026-07-16",
+          "estado": "ENTREGADO",
+          "nota": ""
         }
       ]
     },

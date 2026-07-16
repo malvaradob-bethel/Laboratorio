@@ -211,14 +211,7 @@
           "estado": "PENDIENTE",
           "nota": ""
         }
-      ],
-      "prioridad": {
-        "orden": 2,
-        "tipo": "RENOVACIÓN",
-        "obs": "",
-        "por": "Manuel",
-        "fecha": "2026-07-16"
-      }
+      ]
     },
     {
       "id": "ID-20260708-110358",

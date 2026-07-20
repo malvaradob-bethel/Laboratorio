@@ -241,6 +241,11 @@
           "fecha": "2026-07-20",
           "estado": "ENTREGADO",
           "nota": "Entregado a logística"
+        },
+        {
+          "fecha": "2026-07-20",
+          "estado": "ENTREGADO",
+          "nota": ""
         }
       ]
     },

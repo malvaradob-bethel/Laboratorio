@@ -219,7 +219,7 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "PRUEBA",
       "estacion": "PASCO FM",
-      "estado": "REPARADO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
@@ -236,6 +236,11 @@
           "fecha": "2026-07-16",
           "estado": "REPARADO",
           "nota": "Listo para enviar"
+        },
+        {
+          "fecha": "2026-07-20",
+          "estado": "ENTREGADO",
+          "nota": "Entregado a logística"
         }
       ]
     },

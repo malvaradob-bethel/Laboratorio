@@ -82,7 +82,7 @@
       "equipo": "TRANSMISOR FM",
       "servicio": "PRUEBA",
       "estacion": "QUINCE MIL FM",
-      "estado": "EN PROCESO",
+      "estado": "ENTREGADO",
       "trabajo": "",
       "avances": [
         {
@@ -99,6 +99,11 @@
           "fecha": "2026-07-16",
           "estado": "EN PROCESO",
           "nota": "Prueba de Potencia"
+        },
+        {
+          "fecha": "2026-07-27",
+          "estado": "ENTREGADO",
+          "nota": ""
         }
       ],
       "prioridad": {

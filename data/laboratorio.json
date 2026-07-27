@@ -187,7 +187,7 @@
       "equipo": "TRANSMISOR TV",
       "servicio": "REPARACION",
       "estacion": "PAUCARTAMBO VHF",
-      "estado": "PENDIENTE",
+      "estado": "EN PROCESO",
       "trabajo": "",
       "avances": [
         {
@@ -198,6 +198,11 @@
         {
           "fecha": "2026-07-14",
           "estado": "PENDIENTE",
+          "nota": ""
+        },
+        {
+          "fecha": "2026-07-27",
+          "estado": "EN PROCESO",
           "nota": ""
         }
       ]

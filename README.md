@@ -1,1 +1,1 @@
-# Laboratorio https://www.tecnicabetheltv.com/laboratorio/
+# https://www.tecnicabetheltv.com/laboratorio/
